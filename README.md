@@ -77,11 +77,7 @@ PCNetM-Experiments
 sh experiments/COCOA/pcnet_m/train.sh # you may have to set--nproc_per_node=#YOUR_GPUS
 ```
 
-2. Monitoring status and visual results using tensorboard (if `True` in config.yaml):
-
-```
-sh tensorboard.sh $PORT
-```
+**Best Loss: 0.0674 after 44000 iterations**.
 
 ### Evaluate
 

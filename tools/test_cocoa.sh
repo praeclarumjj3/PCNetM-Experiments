@@ -3,7 +3,7 @@ DATA="data/COCOA"
 CUDA_VISIBLE_DEVICES=0 \
 python tools/test.py \
     --config experiments/COCOA/pcnet_m/config.yaml \
-    --load-model "released/COCOA_pcnet_m.pth.tar"\
+    --load-model "released/COCOA_pcnet_m.pth.tar"\ ## or "experiments/COCOA/pcnet_m/checkpoints/ckpt_iter_44000.pth.tar"
     --order-method "ours" \
     --amodal-method "ours" \
     --order-th 0.1 \
