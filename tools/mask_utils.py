@@ -41,15 +41,15 @@ def save_image(img, name):
             os.makedirs('visualizations/imgs')
     plt.imsave('visualizations/imgs/'+name+'.jpg', img)
 
-def visualize_run(img, modal, amodal_pred, i):
-    if not os.path.exists('visualizations/'):
-            os.makedirs('visualizations/')
+def visualize_run(img, modal, amodal_pred, j, i):
+    if not os.path.exists('visualizations/{}'.format(i)):
+            os.makedirs('visualizations/{}'.format(i))
     plt.rcParams.update({'font.size': 10})
 
-    modal = modal[i] 
+    modal = modal[j] 
     modal = np.uint8(modal)
 
-    amodal_pred = amodal_pred[i]
+    amodal_pred = amodal_pred[j]
     amodal_pred = np.uint8(amodal_pred)
 
     f, (ax1,ax2,ax3) = plt.subplots(1,3)
@@ -66,4 +66,4 @@ def visualize_run(img, modal, amodal_pred, i):
     ax3.set_title("Amodal Mask")
     ax3.axis('off')
 
-    f.savefig('visualizations/preds_{}.jpg'.format(i))
+    f.savefig('visualizations/{}/preds_{}.jpg'.format(i, j))

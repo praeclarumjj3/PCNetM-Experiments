@@ -179,10 +179,11 @@ class Tester(object):
             occpair_rec.update(occpair)
 
 
-            for i in range(amodal_pred.shape[0]):
-                visualize_run(image, modal, amodal_pred, i)
+            for j in range(amodal_pred.shape[0]):
+                visualize_run(image, modal, amodal_pred, j, i)
             
-            exit()
+            if i == 4:
+                exit()
 
             intersection = ((amodal_pred == 1) & (amodal_gt == 1)).sum()
             union = ((amodal_pred == 1) | (amodal_gt == 1)).sum()

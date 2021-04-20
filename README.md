@@ -100,11 +100,15 @@ sh tools/test_cocoa.sh
 |mIoU       |0.81346|
 |pAcc       |0.87744|
 
-![Demo1](visualizations/preds_3.jpg)
+![Demo1](visualizations/0/preds_2.jpg)
 
-![Demo2](visualizations/preds_6.jpg)
+![Demo2](visualizations/1/preds_2.jpg)
 
-![Demo3](visualizations/preds_9.jpg)
+![Demo3](visualizations/2/preds_2.jpg)
+
+![Demo4](visualizations/3/preds_8.jpg)
+
+![Demo5](visualizations/4/preds_2.jpg)
 
 Find more results in **[visualizations](https://github.com/praeclarumjj3/PCNetM-Experiments/tree/master/visualizations)**.
 
