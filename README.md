@@ -83,13 +83,30 @@ sh experiments/COCOA/pcnet_m/train.sh # you may have to set--nproc_per_node=#YOU
 sh tensorboard.sh $PORT
 ```
 
-## Evaluate
+### Evaluate
 
 - Execute:
 
 ```shell
 sh tools/test_cocoa.sh
 ```
+
+#### Results
+
+| Metric    | Value |
+|-----------|-------|
+|acc_allpair|0.96014| 
+|acc_occpair|0.87112|
+|mIoU       |0.81346|
+|pAcc       |0.87744|
+
+![Demo1](visualizations/preds_3.jpg)
+
+![Demo2](visualizations/preds_6.jpg)
+
+![Demo3](visualizations/preds_9.jpg)
+
+Find more results in **[visualizations](https://github.com/praeclarumjj3/PCNetM-Experiments/tree/master/visualizations)**.
 
 ## Acknowledgement
 

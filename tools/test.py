@@ -14,6 +14,9 @@ import models
 import inference as infer
 import utils
 from tqdm import tqdm
+from tools.mask_utils import visualize_run
+import warnings
+warnings.filterwarnings("ignore")
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -54,9 +57,6 @@ class Tester(object):
         self.data_root = self.args.image_root
         if dataset == 'COCOA':
             self.data_reader = reader.COCOADataset(self.args.annotation)
-        else:
-            self.data_reader = reader.KINSLVISDataset(
-                dataset, self.args.annotation)
         self.data_length = self.data_reader.get_image_length()
         self.dataset = dataset
         if self.args.test_num != -1:
@@ -178,16 +178,18 @@ class Tester(object):
             occpair_true_rec.update(occpair_true)
             occpair_rec.update(occpair)
 
+
+            for i in range(amodal_pred.shape[0]):
+                visualize_run(image, modal, amodal_pred, i)
+            
+            exit()
+
             intersection = ((amodal_pred == 1) & (amodal_gt == 1)).sum()
             union = ((amodal_pred == 1) | (amodal_gt == 1)).sum()
             target = (amodal_gt == 1).sum()
             intersection_rec.update(intersection)
             union_rec.update(union)
             target_rec.update(target)
-
-            # make output
-            if self.dataset == 'KINS':
-                segm_json_results.extend(self.make_KINS_output(i, amodal_pred, category))
 
         # print results
         acc_allpair = allpair_true_rec.sum / float(allpair_rec.sum) # accuracy for all pairs
@@ -202,27 +204,6 @@ class Tester(object):
             os.makedirs(os.path.dirname(self.args.output))
         with open(self.args.output, 'w') as f:
             json.dump(segm_json_results, f)
-
-    def make_KINS_output(self, idx, amodal_pred, category):
-        results = []
-        for i in range(amodal_pred.shape[0]):
-            data = dict()
-            rle = maskUtils.encode(
-                np.array(amodal_pred[i, :, :, np.newaxis], order='F'))[0]
-            if hasattr(self.data_reader, 'img_ids'):
-                data['image_id'] = self.data_reader.img_ids[idx]
-            data['category_id'] = category[i].item()
-            if isinstance(rle['counts'], bytes):
-                rle['counts'] = rle['counts'].decode()
-            data['segmentation'] = rle
-            data['bbox'] = utils.mask_to_bbox(amodal_pred[i, :, :])
-            data['area'] = float(data['bbox'][2] * data['bbox'][3])
-            data['iscrowd'] = 0
-            data['score'] = 1.
-            data['id'] = self.count
-            results.append(data)
-            self.count += 1
-        return results
 
 
 if __name__ == "__main__":
